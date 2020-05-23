@@ -5,11 +5,16 @@ import { createServer } from 'http';
 import compression from 'compression';
 import cors from 'cors';
 import schema from './schema';
+import body_parser from 'body-parser';
+
+
 const app = express();
 const server = new ApolloServer({
     schema,
     validationRules: [depthLimit(7)],
 });
+// parse JSON (application/json content-type)
+app.use(body_parser.json());
 app.use('*', cors());
 app.use(compression());
 server.applyMiddleware({ app, path: '/graphql' });

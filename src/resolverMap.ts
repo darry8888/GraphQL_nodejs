@@ -1,5 +1,26 @@
 import { IResolvers } from 'graphql-tools';
 
+// << db setup >>
+import { initialize } from './db';
+const dbName = 'data';
+const collectionName = 'sample';
+
+let mdb = '';
+// << db init >>
+initialize(dbName, collectionName, function (dbCollection: any) { // successCallback
+    // get all items
+    dbCollection.find().toArray(function (err: any, result: any) {
+        if (err) throw err;
+        console.log(result);
+        mdb = JSON.stringify(result);
+    });
+
+    // << db CRUD routes >>
+
+}, function (err: any) { // failureCallback
+    throw (err);
+});
+
 const users = [
     { id: 1, name: 'Fong', age: 23, friendIds: [2, 3], height: 170, weight: 67 },
     { id: 2, name: 'Kevin', age: 40, friendIds: [1], height: 160, weight: 47 },
@@ -9,7 +30,7 @@ const users = [
 const resolverMap: IResolvers = {
     Query: {
         hello:(): string => {
-            return `👋 Hello world!, good 👋`;
+            return `👋 Hello world!, good 👋 ${mdb}`;
         },
         me:() => users[0],
         users:() => users,
@@ -46,7 +67,9 @@ const resolverMap: IResolvers = {
 export default resolverMap;  
 
 /**
-
+ * 
+ * antonyMongoDB
+adminAntony0000
 query allCourse($id: Int!){
   hello
   users{
