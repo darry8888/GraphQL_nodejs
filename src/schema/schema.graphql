@@ -1,0 +1,28 @@
+enum HeightUnit {
+    METRE
+    CENTIMETRE
+    FOOT
+}
+
+enum WeightUnit {
+    KILOGRAM
+    GRAM
+    POUND
+}
+
+
+type User {
+    id: ID
+    name: String
+    age: Int
+    friends: [User]
+    height(unit: HeightUnit = CENTIMETRE): Float
+    weight(unit: WeightUnit = KILOGRAM): Float
+}
+
+type Query {
+    hello: String
+    me: User
+    users: [User],
+    user(id: Int!): User
+}
