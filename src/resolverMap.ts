@@ -68,8 +68,7 @@ export default resolverMap;
 
 /**
  * 
- * antonyMongoDB
-adminAntony0000
+ * 
 query allCourse($id: Int!){
   hello
   users{
